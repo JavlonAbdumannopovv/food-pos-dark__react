@@ -17,6 +17,7 @@ import {
 } from "./HomeElements";
 import Food from "../Food/Food";
 import { titles, foods } from "../../data/data";
+import Orders from "./Orders/Orders";
 
 const Home = () => {
   const inputStyle = {
@@ -117,6 +118,7 @@ const Home = () => {
           </FoodsMain>
         </Foods>
       </Primary>
+      <Orders />
     </Container>
   );
 };
