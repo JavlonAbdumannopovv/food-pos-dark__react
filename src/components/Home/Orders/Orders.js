@@ -21,7 +21,24 @@ import {
   Delete,
 } from "./OrdersElements";
 
-const Orders = () => {
+const Orders = ({ foodsData, setFoodsData }) => {
+  const ind = [];
+  const sortFoodsData = [];
+  foodsData.forEach((item) => {
+    if (item.count > 0) {
+      ind.push(item.index);
+      ind.sort();
+    }
+  });
+  ind.forEach((el) => {
+    foodsData.forEach((item) => {
+      if (item.count > 0 && el === item.index) {
+        sortFoodsData.unshift(item);
+      }
+    });
+  });
+
+
   const inputStyle = {
     width: "100%",
     height: "45px",
@@ -41,7 +58,79 @@ const Orders = () => {
 
   const imgStyle = {
     borderRadius: "100%",
-  }
+  };
+
+  const changeItemCount = (id) => {
+    setFoodsData((prev) => {
+      const updateData = prev.map((item) => {
+        if (item.id === id) {
+          return { ...item, count: item.count + 1 };
+        } else {
+          return item;
+        }
+      });
+      return updateData;
+    });
+  };
+
+  const deleteItemHandler = (id) => {
+    setFoodsData((prev) => {
+      const updateData = prev.map((item) => {
+        if (item.id === id) {
+          return { ...item, count: 0 };
+        } else {
+          return item;
+        }
+      });
+
+      return updateData;
+    });
+  };
+
+  const ordersListPrint = () => {
+    const ordersList1 = sortFoodsData.map((item) => {
+      if (item.count > 0) {
+        return (
+          <Order key={item.id}>
+            <OrderHeader>
+              <img
+                style={imgStyle}
+                width="40px"
+                height="40px"
+                src={item.img}
+                alt={item.name}
+              />
+              <OrderInfo>
+                <OrderName>{item.name}</OrderName>
+                <OrderPrice>${item.price}</OrderPrice>
+              </OrderInfo>
+              <OrderCount onClick={() => changeItemCount(item.id)}>
+                {item.count}
+              </OrderCount>
+              <OrderTotalPrice>
+                {item.getTotalPrice(item.count, item.price).toFixed(2)}
+              </OrderTotalPrice>
+            </OrderHeader>
+            <OrderFooter>
+              <Input>
+                <input
+                  type="text"
+                  placeholder="Order Note..."
+                  style={inputStyle}
+                />
+              </Input>
+              <Delete onClick={() => deleteItemHandler(item.id)}>
+                <i style={iconStyle} className="fa fa-trash"></i>
+              </Delete>
+            </OrderFooter>
+          </Order>
+        );
+      } else {
+        return null;
+      }
+    });
+    return ordersList1;
+  };
 
   return (
     <Container>
@@ -59,183 +148,7 @@ const Orders = () => {
           <MainHeaderTitle>Qty</MainHeaderTitle>
           <MainHeaderTitle>Price</MainHeaderTitle>
         </MainHeader>
-        <OrderList>
-        <Order>
-            <OrderHeader>
-              <img
-                style={imgStyle}
-                width="40px"
-                height="40px"
-                src="https://www.foodandwine.com/thmb/4GxVQDnRapxne7_QcnTgbiim4hg=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/RECIPE1215-XL-chocolate-peppermint-brownies-47f3aa7686d24869823ad190c73d9388.jpg"
-                alt="qwerty"
-              />
-              <OrderInfo>
-                <OrderName>Beef dumpling in hot and sour soup</OrderName>
-                <OrderPrice>$2.29</OrderPrice>
-              </OrderInfo>
-              <OrderCount>2</OrderCount>
-              <OrderTotalPrice>$4.58</OrderTotalPrice>
-            </OrderHeader>
-            <OrderFooter>
-              <Input>
-                <input
-                  type="text"
-                  placeholder="Order Note..."
-                  style={inputStyle}
-                />
-              </Input>
-              <Delete>
-                <i style={iconStyle} className="fa fa-trash"></i>
-              </Delete>
-            </OrderFooter>
-          </Order>
-          <Order>
-            <OrderHeader>
-              <img
-                style={imgStyle}
-                width="40px"
-                height="40px"
-                src="https://www.foodandwine.com/thmb/4GxVQDnRapxne7_QcnTgbiim4hg=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/RECIPE1215-XL-chocolate-peppermint-brownies-47f3aa7686d24869823ad190c73d9388.jpg"
-                alt="qwerty"
-              />
-              <OrderInfo>
-                <OrderName>Beef dumpling in hot and sour soup</OrderName>
-                <OrderPrice>$2.29</OrderPrice>
-              </OrderInfo>
-              <OrderCount>2</OrderCount>
-              <OrderTotalPrice>$4.58</OrderTotalPrice>
-            </OrderHeader>
-            <OrderFooter>
-              <Input>
-                <input
-                  type="text"
-                  placeholder="Order Note..."
-                  style={inputStyle}
-                />
-              </Input>
-              <Delete>
-                <i style={iconStyle} className="fa fa-trash"></i>
-              </Delete>
-            </OrderFooter>
-          </Order>
-          <Order>
-            <OrderHeader>
-              <img
-                style={imgStyle}
-                width="40px"
-                height="40px"
-                src="https://www.foodandwine.com/thmb/4GxVQDnRapxne7_QcnTgbiim4hg=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/RECIPE1215-XL-chocolate-peppermint-brownies-47f3aa7686d24869823ad190c73d9388.jpg"
-                alt="qwerty"
-              />
-              <OrderInfo>
-                <OrderName>Beef dumpling in hot and sour soup</OrderName>
-                <OrderPrice>$2.29</OrderPrice>
-              </OrderInfo>
-              <OrderCount>2</OrderCount>
-              <OrderTotalPrice>$4.58</OrderTotalPrice>
-            </OrderHeader>
-            <OrderFooter>
-              <Input>
-                <input
-                  type="text"
-                  placeholder="Order Note..."
-                  style={inputStyle}
-                />
-              </Input>
-              <Delete>
-                <i style={iconStyle} className="fa fa-trash"></i>
-              </Delete>
-            </OrderFooter>
-          </Order>
-          <Order>
-            <OrderHeader>
-              <img
-                style={imgStyle}
-                width="40px"
-                height="40px"
-                src="https://www.foodandwine.com/thmb/4GxVQDnRapxne7_QcnTgbiim4hg=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/RECIPE1215-XL-chocolate-peppermint-brownies-47f3aa7686d24869823ad190c73d9388.jpg"
-                alt="qwerty"
-              />
-              <OrderInfo>
-                <OrderName>Beef dumpling in hot and sour soup</OrderName>
-                <OrderPrice>$2.29</OrderPrice>
-              </OrderInfo>
-              <OrderCount>2</OrderCount>
-              <OrderTotalPrice>$4.58</OrderTotalPrice>
-            </OrderHeader>
-            <OrderFooter>
-              <Input>
-                <input
-                  type="text"
-                  placeholder="Order Note..."
-                  style={inputStyle}
-                />
-              </Input>
-              <Delete>
-                <i style={iconStyle} className="fa fa-trash"></i>
-              </Delete>
-            </OrderFooter>
-          </Order>
-          <Order>
-            <OrderHeader>
-              <img
-                style={imgStyle}
-                width="40px"
-                height="40px"
-                src="https://www.foodandwine.com/thmb/4GxVQDnRapxne7_QcnTgbiim4hg=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/RECIPE1215-XL-chocolate-peppermint-brownies-47f3aa7686d24869823ad190c73d9388.jpg"
-                alt="qwerty"
-              />
-              <OrderInfo>
-                <OrderName>Beef dumpling in hot and sour soup</OrderName>
-                <OrderPrice>$2.29</OrderPrice>
-              </OrderInfo>
-              <OrderCount>2</OrderCount>
-              <OrderTotalPrice>$4.58</OrderTotalPrice>
-            </OrderHeader>
-            <OrderFooter>
-              <Input>
-                <input
-                  type="text"
-                  placeholder="Order Note..."
-                  style={inputStyle}
-                />
-              </Input>
-              <Delete>
-                <i style={iconStyle} className="fa fa-trash"></i>
-              </Delete>
-            </OrderFooter>
-          </Order>
-          <Order>
-            <OrderHeader>
-              <img
-                style={imgStyle}
-                width="40px"
-                height="40px"
-                src="https://www.foodandwine.com/thmb/4GxVQDnRapxne7_QcnTgbiim4hg=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/RECIPE1215-XL-chocolate-peppermint-brownies-47f3aa7686d24869823ad190c73d9388.jpg"
-                alt="qwerty"
-              />
-              <OrderInfo>
-                <OrderName>Beef dumpling in hot and sour soup</OrderName>
-                <OrderPrice>$2.29</OrderPrice>
-              </OrderInfo>
-              <OrderCount>2</OrderCount>
-              <OrderTotalPrice>$4.58</OrderTotalPrice>
-            </OrderHeader>
-            <OrderFooter>
-              <Input>
-                <input
-                  type="text"
-                  placeholder="Order Note..."
-                  style={inputStyle}
-                />
-              </Input>
-              <Delete>
-                <i style={iconStyle} className="fa fa-trash"></i>
-              </Delete>
-            </OrderFooter>
-          </Order>
-          
-        </OrderList>
+        <OrderList>{ordersListPrint()}</OrderList>
       </Main>
     </Container>
   );

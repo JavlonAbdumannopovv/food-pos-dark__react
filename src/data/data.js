@@ -44,11 +44,9 @@ class Title {
     this.name = name;
     this.active = active;
     this.style = (active) => {
-      return (
-        active
+      return active
         ? { color: "#EA7C69", borderBottom: "2px solid #EA7C69" }
-        : { color: "#fff", borderBottom: "2px solid transparent" }
-      )
+        : { color: "#fff", borderBottom: "2px solid transparent" };
     };
   }
 }
@@ -69,9 +67,15 @@ class Food1 {
     this.name = name;
     this.type = type;
     this.id = `${this.name}__${Math.round(Math.random() * 100000000)}`;
-    this.number = Math.round(Math.random() * 10);
+    this.number = Math.random() * 10;
     this.price = Number(this.number.toFixed(2));
     this.bowl = Math.round(Math.random() * 100);
+    //order section
+    this.count = 0;
+    this.getTotalPrice = (count, price) => {
+      return count * price;
+    };
+    this.index = 0;
   }
 }
 
@@ -212,3 +216,29 @@ export const foods = {
     ),
   ],
 };
+
+export class Order {
+  constructor(id, name, img, type, price, _note) {
+    this.id = id;
+    this.name = name;
+    this.img = img;
+    this.type = type;
+    this.price = price;
+    this.note = _note;
+    this.count = 0;
+    this.getCount = (count) => {
+      return count + 1;
+    };
+    this.totalPrice = (price, count) => {
+      return price * count;
+    };
+  }
+}
+
+export const ordersList = [
+  new Food1(
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWo1GcR1FuoNhDmlEloWoSU6QIGTBCXoKjpwxKM7z0E_hAso9qF2a8gkqOousSRNc9Xlc&usqp=CAU",
+    "TRASH",
+    "TRASH"
+  ),
+];

@@ -35,31 +35,49 @@ const Home = () => {
   const [foodsData, setFoodsData] = useState(foods.data);
   const [activeType, setActiveType] = useState("Hot Dishes");
   const [titlesData, setTitlesData] = useState(titles);
-
+  const [search, setSearch] = useState("");
+  const [index, setIndex] = useState(0);
   const clickTitleHandler = (name, key) => {
+    setSearch("");
     setTitlesData((prevItems) => {
       const updatedItems = [...prevItems];
-      const changedItems = updatedItems.map((item)=> {
+      const changedItems = updatedItems.map((item) => {
         if (item.name === name) {
-          return(
-            {
-              ...item, 
-              active: true,
-            }
-          )
+          return {
+            ...item,
+            active: true,
+          };
         } else {
-          return(
-            {
-              ...item, 
-              active: false,
-            }
-          )
+          return {
+            ...item,
+            active: false,
+          };
         }
-      })
+      });
       return changedItems;
     });
     setActiveType(name);
   };
+
+  const clickFoodHandler = (food) => {
+    console.log(index);
+    setIndex((prev => prev + 1));
+    setFoodsData((prev) => {
+      const updateData = prev.map((item) => {
+        if (item.id === food.id) {
+          return { ...item, count: item.count + 1, index: index };
+        } else {
+          return item;
+        }
+      });
+      return updateData;
+    });
+  };
+
+  const searchFoodHandler = (e) => {
+    setSearch(e.target.value);
+  };
+
 
   return (
     <Container>
@@ -72,6 +90,8 @@ const Home = () => {
           <Search>
             <i className="fa-solid fa-magnifying-glass"></i>
             <input
+              value={search}
+              onChange={searchFoodHandler}
               style={inputStyle}
               type="search"
               placeholder="Search for food, coffe, etc.."
@@ -99,26 +119,43 @@ const Home = () => {
             </Sort>
           </FoodsHeader>
           <FoodsMain>
-            {foodsData.map((food) => {
-              if (food.type.includes(activeType)) {
-                return (
-                  <div key={food.id}>
-                    <Food
-                      id={food.id}
-                      img={food.img}
-                      name={food.name}
-                      price={food.price}
-                      bowl={food.bowl}
-                    />
-                  </div>
-                );
-              }
-              return null;
-            })}
+            {search === ""
+              ? foodsData.map((food) => {
+                  if (food.type.includes(activeType)) {
+                    return (
+                      <div key={food.id} onClick={() => clickFoodHandler(food)}>
+                        <Food
+                          id={food.id}
+                          img={food.img}
+                          name={food.name}
+                          price={food.price}
+                          bowl={food.bowl}
+                        />
+                      </div>
+                    );
+                  }
+                  return null;
+                })
+              : foodsData.map((food) => {
+                  if (food.name.toLowerCase().includes(search)) {
+                    return (
+                      <div key={food.id} onClick={() => clickFoodHandler(food)}>
+                        <Food
+                          id={food.id}
+                          img={food.img}
+                          name={food.name}
+                          price={food.price}
+                          bowl={food.bowl}
+                        />
+                      </div>
+                    );
+                  }
+                  return null;
+                })}
           </FoodsMain>
         </Foods>
       </Primary>
-      <Orders />
+      <Orders foodsData={foodsData} setFoodsData={setFoodsData} />
     </Container>
   );
 };
