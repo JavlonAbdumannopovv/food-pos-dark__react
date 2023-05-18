@@ -54,6 +54,7 @@ export const OrderList = styled.div`
   width: 100%;
   height: 454px;
   overflow-x: hidden;
+  border-bottom: 1px solid #393c49;
 
   &::-webkit-scrollbar {
     width: 5px;
@@ -160,4 +161,56 @@ export const Delete = styled.div`
   border-radius: 8px;
   cursor: pointer;
   margin: 0 0 0 18px;
+`;
+
+export const Footer = styled.div`
+  margin: 24px 0 0;
+`;
+
+export const DiscountWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const DiscountTitle = styled.div`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  color: #abbbc2;
+`;
+
+export const Discount = styled.div`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 140%;
+`;
+
+export const SubtotalWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 16px 0 42px;
+`;
+
+export const SubtotalTitle = styled.div`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  color: #abbbc2;
+`;
+
+export const Subtotal = styled.div`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 140%;
+`;
+
+export const ButtonWrapper = styled.div`
+  width: 361px;
+  margin: auto;
 `;

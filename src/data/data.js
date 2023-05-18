@@ -66,7 +66,9 @@ class Food1 {
     this.img = img;
     this.name = name;
     this.type = type;
-    this.id = `${this.name}__${Math.round(Math.random() * 100000000)}`;
+    this.id = `${this.name}__${Math.round(
+      Math.random() * 100000000
+    )}__${Math.random()}`;
     this.number = Math.random() * 10;
     this.price = Number(this.number.toFixed(2));
     this.bowl = Math.round(Math.random() * 100);
@@ -241,4 +243,49 @@ export const ordersList = [
     "TRASH",
     "TRASH"
   ),
+];
+
+export const settingsMenu = [
+  {
+    id: 2,
+    icon: "fa-regular fa-heart",
+    title: "Appereance",
+    subtitle: "Dark and Light mode, Font size",
+    link: "/error",
+  },
+  {
+    id: 3,
+    icon: "fa-sharp fa-solid fa-building-columns",
+    title: "Your Restaurant",
+    subtitle: "Dark and Light mode, Font size",
+    link: "/settings/error",
+  },
+  {
+    id: 4,
+    icon: "fa-brands fa-product-hunt",
+    title: "Products Management",
+    subtitle: "Manage your product, pricing, etc",
+    link: "/settings/products",
+  },
+  {
+    id: 5,
+    icon: "fa-regular fa-bell",
+    title: "Notifications",
+    subtitle: "Customize your notifications",
+    link: "/settings/error",
+  },
+  {
+    id: 6,
+    icon: "fa fa-lock",
+    title: "Security",
+    subtitle: "Configure Password, PIN, etc",
+    link: "/settings/error",
+  },
+  {
+    id: 1,
+    icon: "fa fa-circle-exclamation",
+    title: "About Us",
+    subtitle: "Find out more about Posly",
+    link: "/settings/error",
+  },
 ];

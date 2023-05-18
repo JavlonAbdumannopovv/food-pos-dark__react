@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../../Button/Button";
 import {
   Container,
@@ -19,9 +19,17 @@ import {
   OrderFooter,
   Input,
   Delete,
+  Footer,
+  DiscountWrapper,
+  DiscountTitle,
+  Discount,
+  SubtotalWrapper,
+  SubtotalTitle,
+  Subtotal,
+  ButtonWrapper,
 } from "./OrdersElements";
 
-const Orders = ({ foodsData, setFoodsData }) => {
+const Orders = ({ foodsData, setFoodsData, setStyleBack }) => {
   const ind = [];
   const sortFoodsData = [];
   foodsData.forEach((item) => {
@@ -37,7 +45,6 @@ const Orders = ({ foodsData, setFoodsData }) => {
       }
     });
   });
-
 
   const inputStyle = {
     width: "100%",
@@ -132,6 +139,24 @@ const Orders = ({ foodsData, setFoodsData }) => {
     return ordersList1;
   };
 
+  const [subtotal, setSubtotal] = useState(0);
+
+  React.useEffect(() => {
+    setSubtotal((prev) => {
+      let subtotal = 0;
+      const updatedItem = sortFoodsData.map((item) => {
+        return (subtotal = subtotal + item.count * item.price);
+      });
+      return subtotal.toFixed(2);
+    });
+  }, [sortFoodsData]);
+
+  const clickButtonHandler = () => {
+    if (sortFoodsData.length > 0) {
+      setStyleBack({ display: "absolute" });
+    }
+  };
+
   return (
     <Container>
       <Header>
@@ -150,6 +175,24 @@ const Orders = ({ foodsData, setFoodsData }) => {
         </MainHeader>
         <OrderList>{ordersListPrint()}</OrderList>
       </Main>
+      <Footer>
+        <DiscountWrapper>
+          <DiscountTitle>Discount</DiscountTitle>
+          <Discount>$0</Discount>
+        </DiscountWrapper>
+        <SubtotalWrapper>
+          <SubtotalTitle>Sub total</SubtotalTitle>
+          <Subtotal>${subtotal}</Subtotal>
+        </SubtotalWrapper>
+        <ButtonWrapper onClick={clickButtonHandler}>
+          <Button
+            name="Continue to Payment"
+            width="361px"
+            height="48px"
+            active={false}
+          />
+        </ButtonWrapper>
+      </Footer>
     </Container>
   );
 };

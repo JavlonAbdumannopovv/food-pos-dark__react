@@ -3,16 +3,21 @@ import Settings from "../Settings/Settings";
 import { Route, Routes } from "react-router-dom";
 import Home from "../Home/Home";
 
-const Main = () => {
+const Main = ({ styleBack, setStyleBack }) => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />}/>                
-        <Route path="/settings" element={<Settings />}/>
+        <Route
+          path="/"
+          element={<Home styleBack={styleBack} setStyleBack={setStyleBack} />}
+        />
+        <Route path="/settings" element={<Settings />}>
+
+        </Route>
       </Routes>
     </>
-  )
-}
+  );
+};
 
 export default Main;
 

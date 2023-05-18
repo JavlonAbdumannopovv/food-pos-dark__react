@@ -4,6 +4,8 @@
   box-sizing: border-box;
   color: #fff;
   font-family: "Barlow";
+  text-decoration: none !important;
+  list-style-type: none !important;
 }
 
 body {
@@ -22,7 +24,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 .active p {
@@ -48,7 +50,13 @@ body {
   text-decoration: none !important;
 }
 
-
 i {
   text-decoration: underline !important;
+}
+
+.Back {
+  position: absolute;
+  width: 688px;
+  height: 834px;
+  z-index: 100;
 }

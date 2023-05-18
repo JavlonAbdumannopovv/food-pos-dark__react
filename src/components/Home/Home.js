@@ -18,6 +18,7 @@ import {
 import Food from "../Food/Food";
 import { titles, foods } from "../../data/data";
 import Orders from "./Orders/Orders";
+import Payment from "./Payment/Payment";
 
 const Home = () => {
   const inputStyle = {
@@ -32,6 +33,9 @@ const Home = () => {
     fontSize: "14px",
     lineHeight: "140%",
   };
+  const [styleBack, setStyleBack] = React.useState({
+    display: "none",
+  });
   const [foodsData, setFoodsData] = useState(foods.data);
   const [activeType, setActiveType] = useState("Hot Dishes");
   const [titlesData, setTitlesData] = useState(titles);
@@ -60,8 +64,7 @@ const Home = () => {
   };
 
   const clickFoodHandler = (food) => {
-    console.log(index);
-    setIndex((prev => prev + 1));
+    setIndex((prev) => prev + 1);
     setFoodsData((prev) => {
       const updateData = prev.map((item) => {
         if (item.id === food.id) {
@@ -74,13 +77,17 @@ const Home = () => {
     });
   };
 
+  const backFunc = () => {
+    return <div className="Back" style={styleBack}></div>;
+  };
+
   const searchFoodHandler = (e) => {
     setSearch(e.target.value);
   };
 
-
   return (
     <Container>
+      {backFunc()}
       <Primary>
         <Header>
           <User>
@@ -155,7 +162,15 @@ const Home = () => {
           </FoodsMain>
         </Foods>
       </Primary>
-      <Orders foodsData={foodsData} setFoodsData={setFoodsData} />
+      {styleBack.display === "none" ? (
+        <Orders
+          foodsData={foodsData}
+          setFoodsData={setFoodsData}
+          setStyleBack={setStyleBack}
+        />
+      ) : (
+        <Payment setFoodsData={setFoodsData} setStyleBack={setStyleBack} />
+      )}
     </Container>
   );
 };
