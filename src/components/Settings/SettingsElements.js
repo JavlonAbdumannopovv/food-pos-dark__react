@@ -43,6 +43,18 @@ export const MenuItem = styled.div`
   }
 `;
 
+export const MenuItem1 = styled.div`
+  width: 100%;
+  height: 87px;
+  padding: 24px;
+  display: flex;
+  align-items: flex-start;
+  transition: all 0.4s ease;
+  cursor: pointer;
+  background: #54363b !important;
+  border-right: 3px solid #ea7c69 !important;
+`;
+
 export const ItemWrapper = styled.div`
   width: 100%;
   margin: 0 0 0 6px;
@@ -52,6 +64,13 @@ export const ItemTitle = styled.div`
   font-weight: 500;
   font-size: 14px;
   line-height: 130%;
+`;
+
+export const ItemTitle1 = styled.div`
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 130%;
+  color: #ea7c69 !important;
 `;
 
 export const ItemSubtitle = styled.div`

@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { titles, foods } from "../../../data/data";
+import {
+  titles,
+  foodMenu,
+  newFoods,
+  Food1,
+  newEditFoods,
+} from "../../../data/data";
 import plus from "../../../assets/Plus.svg";
 import {
   Container,
@@ -33,9 +39,10 @@ import {
   MenuItem,
   MenuButtons,
   MenuButton,
+  Completed,
 } from "./ProductsElements.js";
 
-const Products = () => {
+const Products = ({ foodsData, setFoodsData, setBackStyle }) => {
   const iconStyle = {
     width: "20px",
     height: "20px",
@@ -51,17 +58,34 @@ const Products = () => {
     outline: "none",
     background: "transparent",
     padding: "10px",
-    width: "220px",
+    width: "100%",
     height: "40px",
     fontStyle: "normal",
     fontWeight: "400",
     fontSize: "14px",
     lineHeight: "140%",
   };
-  const [activeType, setActiveType] = useState("Hot Dishes");
-  const [foodsData, setFoodsData] = useState(foods.data);
-  const [titlesData, setTitlesData] = useState(titles);
+  const smallStyle = {
+    display: "none",
+  };
+  const menuStyle = {
+    display: "none",
+  };
 
+  const [newFoodss, setNewFoods] = useState(newFoods);
+  const [newEditFoodss, setNewEditFoods] = useState(newEditFoods);
+  const [activeType, setActiveType] = useState("Hot Dishes");
+  const [titlesData, setTitlesData] = useState(titles);
+  const [imgInput, setImgInput] = useState("");
+  const [nameInput, setNameInput] = useState("");
+  const [foodState, setFoodState] = useState(foodMenu.foodState);
+  const [foodType, setFoodType] = useState(foodMenu.foodType);
+  const [addShow, setAddShow] = useState(true);
+  const [menuActive, setMenuActive] = useState(menuStyle);
+  const [completed, setCompleted] = useState(smallStyle);
+  const [clickedId, setClickedId] = useState("");
+  const [buttonActive, setButtonActive] = useState(false);
+  const [cloneActive, setCloneActive] = useState(0);
   const clickTitleHandler = (name, key) => {
     setTitlesData((prevItems) => {
       const updatedItems = [...prevItems];
@@ -82,6 +106,182 @@ const Products = () => {
     });
     setActiveType(name);
   };
+
+  const imgInputChanged = (e) => {
+    setCompleted({ display: "none" });
+    setImgInput(e.target.value);
+  };
+
+  const nameInputChanged = (e) => {
+    setCompleted({ display: "none" });
+    setNameInput(e.target.value);
+  };
+
+  const foodStateItemClick = (id) => {
+    setFoodState((prev) => {
+      const data = prev.map((item) => {
+        return { ...item, active: false };
+      });
+      const updatedData = data.map((item) => {
+        if (item.id === id) {
+          return { ...item, active: true };
+        } else {
+          return item;
+        }
+      });
+      return updatedData;
+    });
+  };
+
+  const foodTypeItemClick = (id) => {
+    setFoodType((prev) => {
+      const data = prev.map((item) => {
+        return { ...item, active: false };
+      });
+      const updatedData = data.map((item) => {
+        if (item.id === id) {
+          return { ...item, active: true };
+        } else {
+          return item;
+        }
+      });
+      return updatedData;
+    });
+  };
+
+  const clickNewDish = () => {
+    setCloneActive((prev) => prev + 1);
+    setAddShow(true);
+    setMenuActive({ display: "block" });
+    setBackStyle({ display: "block" });
+  };
+
+  const addNewFood = () => {
+    if (imgInput !== "" && nameInput !== "") {
+      setCompleted({ display: "none" });
+      setNewFoods((prev) => {
+        const stateActive = foodState.filter((item) => item.active === true);
+        const typeActive = foodType.filter((item) => item.active === true);
+        const uploadedData = [
+          ...prev,
+          new Food1(
+            imgInput,
+            nameInput,
+            `${stateActive[0].type} ${typeActive[0].type}`
+          ),
+        ];
+        return uploadedData;
+      });
+      setFoodsData((prev) => {
+        const stateActive = foodState.filter((item) => item.active === true);
+        const typeActive = foodType.filter((item) => item.active === true);
+        const uploadedData = [
+          new Food1(
+            imgInput,
+            nameInput,
+            `${stateActive[0].type} ${typeActive[0].type}`
+          ),
+          ...prev,
+        ];
+        return uploadedData;
+      });
+      cancelNewFood();
+      setButtonActive(true);
+    } else if (imgInput === "" || nameInput === "") {
+      setCompleted({ display: "block" });
+    }
+  };
+
+  const cancelNewFood = () => {
+    setMenuActive({ display: "none" });
+    setCompleted({ display: "none" });
+    setNameInput("");
+    setImgInput("");
+    setBackStyle({ display: "none" });
+  };
+
+  const editDishHandler = (id) => {
+    setCloneActive((prev) => prev + 1);
+    foodsData.forEach((food) => {
+      if (food.id === id) {
+        setNameInput(food.name);
+        setImgInput(food.img);
+      }
+    });
+    setAddShow(false);
+    setMenuActive({ display: "block" });
+    setClickedId(id);
+    setBackStyle({ display: "block" });
+  };
+
+  const editClickedDish = (id) => {
+    if (imgInput !== "" && nameInput !== "") {
+      setCompleted({ display: "none" });
+      const stateActive = foodState.filter((item) => item.active === true);
+      const typeActive = foodType.filter((item) => item.active === true);
+      const data = foodsData.map((food) => {
+        if (food.id === id) {
+          return { ...food };
+        } else {
+          return null;
+        }
+      });
+
+      setFoodsData((prev) => {
+        const updatedData = prev.map((food) => {
+          if (food.id === id) {
+            const newObj = new Food1(
+              imgInput,
+              nameInput,
+              `${stateActive[0].type} ${typeActive[0].type}`
+            );
+            return { ...newObj, id: id };
+          } else {
+            return food;
+          }
+        });
+        return [...updatedData];
+      });
+
+      setButtonActive(true);
+      cancelNewFood();
+    } else if (imgInput === "" || nameInput === "") {
+      setCompleted({ display: "block" });
+    }
+  };
+  React.useEffect(() => {
+    console.log(cloneActive);
+    if (cloneActive === 0) {
+      setNewEditFoods((prev) => {
+        const data1 = [];
+        foodsData.forEach((food, i) => {
+          data1.push(food);
+        });
+        return [...prev, ...data1];
+      });
+    }
+    setCloneActive((prev) => prev + 1);
+  }, [foodsData]);
+
+  const discardChanges = () => {
+    setFoodsData((prev) => {
+      const a = [];
+      newEditFoodss.forEach((item, i) => {
+        if (i < newEditFoodss.length / 2) {
+          a.push(item);
+        }
+      });
+      return a;
+    });
+    saveChanges();
+  };
+  const saveChanges = () => {
+    setButtonActive(false);
+    setNewFoods([]);
+    setNewEditFoods([]);
+    setCloneActive(0);
+  };
+
   return (
     <Container>
       <FoodsHeader>
@@ -105,7 +305,7 @@ const Products = () => {
       </Category>
       <Foods>
         <FoodsMain>
-          <NewDish>
+          <NewDish onClick={clickNewDish}>
             <NewDishIcon>
               <img src={plus} alt="plus" />
             </NewDishIcon>
@@ -127,7 +327,7 @@ const Products = () => {
                     <FoodPrice>${food.price}</FoodPrice> -
                     <FoodBowl>{food.bowl} Bowls</FoodBowl>
                   </Wrapper>
-                  <Edit>
+                  <Edit onClick={() => editDishHandler(food.id)}>
                     <EditIcon></EditIcon>
                     <EditTitle>Edit dish</EditTitle>
                   </Edit>
@@ -138,18 +338,23 @@ const Products = () => {
           })}
         </FoodsMain>
       </Foods>
-      <ButtonWrapper>
-        <Button>Discard Changes</Button>
-        <Button>Save Changes</Button>
-      </ButtonWrapper>
-      <FoodMenu>
+      {buttonActive ? (
+        <ButtonWrapper>
+          <Button onClick={discardChanges}>Discard Changes</Button>
+          <Button onClick={saveChanges}>Save Changes</Button>
+        </ButtonWrapper>
+      ) : null}
+      <FoodMenu style={menuActive}>
+        <Completed style={completed}>Please, Full completed!</Completed>
         <MenuWrapper>
           <MenuNameTitle>Img Url</MenuNameTitle>
           <MenuNameInput>
             <input
+              value={imgInput}
               style={inputStyle}
               type="text"
               placeholder="Food img url enter ..."
+              onChange={imgInputChanged}
             />
           </MenuNameInput>
         </MenuWrapper>
@@ -157,30 +362,49 @@ const Products = () => {
           <MenuNameTitle>Name</MenuNameTitle>
           <MenuNameInput>
             <input
+              value={nameInput}
               style={inputStyle}
               type="text"
               placeholder="Food name enter ..."
+              onChange={nameInputChanged}
             />
           </MenuNameInput>
         </MenuWrapper>
         <TypeWrapper>
           <State>
             <MenuNameTitle>Food State</MenuNameTitle>
-            <MenuItem>Hot</MenuItem>
-            <MenuItem>Cold</MenuItem>
+            {foodState.map((item) => (
+              <MenuItem
+                onClick={() => foodStateItemClick(item.id)}
+                key={item.id}
+                style={item.style(item.active)}
+              >
+                {item.type}
+              </MenuItem>
+            ))}
           </State>
           <Type>
             <MenuNameTitle>Food Type</MenuNameTitle>
-            <MenuItem>Soup</MenuItem>
-            <MenuItem>Grill</MenuItem>
-            <MenuItem>Appetizer</MenuItem>
-            <MenuItem>Dessert</MenuItem>
+            {foodType.map((item) => (
+              <MenuItem
+                onClick={() => foodTypeItemClick(item.id)}
+                key={item.id}
+                style={item.style(item.active)}
+              >
+                {item.type}
+              </MenuItem>
+            ))}
           </Type>
         </TypeWrapper>
         <MenuButtons>
-          <MenuButton>Cancel</MenuButton>
-          <MenuButton>Add</MenuButton>
-          <MenuButton>Edit</MenuButton>
+          <MenuButton onClick={cancelNewFood}>Cancel</MenuButton>
+          {addShow ? (
+            <MenuButton onClick={() => addNewFood()}>Add</MenuButton>
+          ) : (
+            <MenuButton onClick={() => editClickedDish(clickedId)}>
+              Edit
+            </MenuButton>
+          )}
         </MenuButtons>
       </FoodMenu>
     </Container>

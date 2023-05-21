@@ -28,8 +28,9 @@ import {
   Subtotal,
   ButtonWrapper,
 } from "./OrdersElements";
+import { backData } from "../../../data/data";
 
-const Orders = ({ foodsData, setFoodsData, setStyleBack }) => {
+const Orders = ({ foodsData, setFoodsData, setBackStyle }) => {
   const ind = [];
   const sortFoodsData = [];
   foodsData.forEach((item) => {
@@ -153,7 +154,8 @@ const Orders = ({ foodsData, setFoodsData, setStyleBack }) => {
 
   const clickButtonHandler = () => {
     if (sortFoodsData.length > 0) {
-      setStyleBack({ display: "absolute" });
+      console.log(sortFoodsData.length);
+      setBackStyle({ display: "block" });
     }
   };
 

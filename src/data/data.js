@@ -61,7 +61,7 @@ export const titles = [
 ];
 
 //  NOTE - Foods
-class Food1 {
+export class Food1 {
   constructor(img, name, type) {
     this.img = img;
     this.name = name;
@@ -252,6 +252,7 @@ export const settingsMenu = [
     title: "Appereance",
     subtitle: "Dark and Light mode, Font size",
     link: "/error",
+    style: {},
   },
   {
     id: 3,
@@ -259,6 +260,7 @@ export const settingsMenu = [
     title: "Your Restaurant",
     subtitle: "Dark and Light mode, Font size",
     link: "/settings/error",
+    style: {},
   },
   {
     id: 4,
@@ -266,6 +268,11 @@ export const settingsMenu = [
     title: "Products Management",
     subtitle: "Manage your product, pricing, etc",
     link: "/settings/products",
+    style: {
+      background: "#54363b !important",
+      color: "#ea7c69 !important",
+      borderRight: "2px solid #ea7c69 !important",
+    },
   },
   {
     id: 5,
@@ -273,6 +280,7 @@ export const settingsMenu = [
     title: "Notifications",
     subtitle: "Customize your notifications",
     link: "/settings/error",
+    style: {},
   },
   {
     id: 6,
@@ -280,6 +288,7 @@ export const settingsMenu = [
     title: "Security",
     subtitle: "Configure Password, PIN, etc",
     link: "/settings/error",
+    style: {},
   },
   {
     id: 1,
@@ -287,5 +296,79 @@ export const settingsMenu = [
     title: "About Us",
     subtitle: "Find out more about Posly",
     link: "/settings/error",
+    style: {},
   },
 ];
+
+export const backData = { display: "none" };
+
+export const foodMenu = {
+  foodState: [
+    {
+      id: 1,
+      type: "Hot Dishes",
+      active: true,
+      style: (active) => {
+        return active
+          ? { background: "#252836" }
+          : { background: "transparent" };
+      },
+    },
+    {
+      id: 2,
+      type: "Cold Dishes",
+      active: false,
+      style: (active) => {
+        return active
+          ? { background: "#252836" }
+          : { background: "transparent" };
+      },
+    },
+  ],
+  foodType: [
+    {
+      id: 3,
+      type: "Soup",
+      active: true,
+      style: (active) => {
+        return active
+          ? { background: "#252836" }
+          : { background: "transparent" };
+      },
+    },
+    {
+      id: 4,
+      type: "Grill",
+      active: false,
+      style: (active) => {
+        return active
+          ? { background: "#252836" }
+          : { background: "transparent" };
+      },
+    },
+    {
+      id: 5,
+      type: "Appetizer",
+      active: false,
+      style: (active) => {
+        return active
+          ? { background: "#252836" }
+          : { background: "transparent" };
+      },
+    },
+    {
+      id: 6,
+      type: "Dessert",
+      active: false,
+      style: (active) => {
+        return active
+          ? { background: "#252836" }
+          : { background: "transparent" };
+      },
+    },
+  ],
+};
+
+export const newFoods = [];
+
+export const newEditFoods = [];

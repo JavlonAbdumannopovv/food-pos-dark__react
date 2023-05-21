@@ -139,3 +139,7 @@ export const FoodsMain = styled.div`
   align-items: center;
   flex-wrap: wrap;
 `;
+
+export const None = styled.div`
+  display: none !important;
+`;

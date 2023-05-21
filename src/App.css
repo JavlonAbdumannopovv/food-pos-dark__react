@@ -53,10 +53,3 @@ body {
 i {
   text-decoration: underline !important;
 }
-
-.Back {
-  position: absolute;
-  width: 688px;
-  height: 834px;
-  z-index: 100;
-}

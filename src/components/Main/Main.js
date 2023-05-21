@@ -2,18 +2,35 @@ import React from "react";
 import Settings from "../Settings/Settings";
 import { Route, Routes } from "react-router-dom";
 import Home from "../Home/Home";
+import { foods } from "../../data/data";
 
-const Main = ({ styleBack, setStyleBack }) => {
+const Main = ({ backStyle,setBackStyle }) => {
+  const [foodsData, setFoodsData] = React.useState(foods.data);
   return (
     <>
       <Routes>
         <Route
           path="/"
-          element={<Home styleBack={styleBack} setStyleBack={setStyleBack} />}
+          element={
+            <Home
+              backStyle={backStyle}
+              setBackStyle={setBackStyle}
+              foodsData={foodsData}
+              setFoodsData={setFoodsData}
+            />
+          }
         />
-        <Route path="/settings" element={<Settings />}>
-
-        </Route>
+        <Route
+          path="/settings"
+          element={
+            <Settings
+              foodsData={foodsData}
+              setFoodsData={setFoodsData}
+              backStyle={backStyle}
+              setBackStyle={setBackStyle}
+            />
+          }
+        />
       </Routes>
     </>
   );

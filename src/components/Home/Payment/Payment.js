@@ -36,7 +36,7 @@ import {
   ButtonWrapper,
 } from "./PaymentElements";
 
-const Payment = ({ setFoodsData, setStyleBack }) => {
+const Payment = ({ setFoodsData, setBackStyle }) => {
   const inputStyle = {
     width: "100%",
     height: "48px",
@@ -55,7 +55,7 @@ const Payment = ({ setFoodsData, setStyleBack }) => {
   };
 
   const cancelPayment = () => {
-    setStyleBack({ display: "none" });
+    setBackStyle({ display: "none" });
   };
 
   const confirmPayment = () => {

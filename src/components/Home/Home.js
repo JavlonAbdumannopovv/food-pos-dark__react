@@ -14,13 +14,15 @@ import {
   FoodsTitle,
   Sort,
   FoodsMain,
+  None,
 } from "./HomeElements";
 import Food from "../Food/Food";
-import { titles, foods } from "../../data/data";
+import { titles } from "../../data/data";
 import Orders from "./Orders/Orders";
 import Payment from "./Payment/Payment";
+import { backData } from "../../data/data";
 
-const Home = () => {
+const Home = ({ foodsData, setFoodsData, backStyle, setBackStyle }) => {
   const inputStyle = {
     border: "none",
     outline: "none",
@@ -33,10 +35,7 @@ const Home = () => {
     fontSize: "14px",
     lineHeight: "140%",
   };
-  const [styleBack, setStyleBack] = React.useState({
-    display: "none",
-  });
-  const [foodsData, setFoodsData] = useState(foods.data);
+
   const [activeType, setActiveType] = useState("Hot Dishes");
   const [titlesData, setTitlesData] = useState(titles);
   const [search, setSearch] = useState("");
@@ -77,17 +76,12 @@ const Home = () => {
     });
   };
 
-  const backFunc = () => {
-    return <div className="Back" style={styleBack}></div>;
-  };
-
   const searchFoodHandler = (e) => {
     setSearch(e.target.value);
   };
 
   return (
     <Container>
-      {backFunc()}
       <Primary>
         <Header>
           <User>
@@ -160,16 +154,17 @@ const Home = () => {
                   return null;
                 })}
           </FoodsMain>
+          <None></None>
         </Foods>
       </Primary>
-      {styleBack.display === "none" ? (
+      {backStyle.display === "none" ? (
         <Orders
           foodsData={foodsData}
           setFoodsData={setFoodsData}
-          setStyleBack={setStyleBack}
+          setBackStyle={setBackStyle}
         />
       ) : (
-        <Payment setFoodsData={setFoodsData} setStyleBack={setStyleBack} />
+        <Payment setFoodsData={setFoodsData} setBackStyle={setBackStyle} />
       )}
     </Container>
   );

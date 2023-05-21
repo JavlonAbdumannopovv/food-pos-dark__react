@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   padding: 24px;
-  ${"" /* position: relative; */}
 `;
 
 export const Category = styled.div`
@@ -246,7 +245,6 @@ export const FoodMenu = styled.div`
   height: 540px;
   padding: 24px;
   background: #1f1d2b;
-  background: #111;
   border-radius: 16px;
   z-index: 999;
 `;
@@ -334,4 +332,13 @@ export const MenuButton = styled.div`
     border-radius: 8px;
     color: #fff;
   }
+`;
+
+export const Completed = styled.p`
+  font-weight: 600;
+  font-size: 15px;
+  color: #ea7c69;
+  text-align: center;
+  position: absolute;
+  left: 130px;
 `;
